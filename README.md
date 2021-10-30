@@ -14,6 +14,6 @@ Repositório para a parte mobile da Global, realizado para a FIAP, no curso de a
 
 https://github.com/Poagilers-Fenix/Global-Impact
 
-## Parte mobile do nosso projeto
+## Parte web do nosso projeto
 
-https://github.com/Poagilers-Fenix/Global-Impact-Mobile
+https://github.com/Poagilers-Fenix/Global-Impact-Web
