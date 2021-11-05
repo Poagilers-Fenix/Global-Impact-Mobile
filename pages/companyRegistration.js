@@ -24,19 +24,24 @@ export default function InitialSreen({ navigation }) {
         <InputWithIcon title="Cnpj"></InputWithIcon>
         <InputWithIcon title="Nova Senha"></InputWithIcon>
         <InputWithIcon title="Senha"></InputWithIcon>
-        {/* <View style={{ display: "flex", flexDirection: "row" }}>
+        <View style={{ display: "flex", flexDirection: "row" }}>
           <TouchableOpacity
-            style={{ display: "flex", alignItems: "center", marginTop: 30 }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: 30,
+              marginRight: 30,
+            }}
           >
-            <Text style={styles.btnDisable}>Voltar</Text>
+            <Text style={styles.btnVoltar}>Voltar</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{ display: "flex", alignItems: "center", marginTop: 20 }}
+            style={{ display: "flex", alignItems: "center", marginTop: 30 }}
             onPress={() => navigation.navigate("CompanyRegistration")}
           >
             <Text style={styles.btnEnable}>Salvar</Text>
           </TouchableOpacity>
-        </View> */}
+        </View>
       </View>
     </View>
   );
@@ -80,5 +85,31 @@ const styles = StyleSheet.create({
     width: 400,
     height: 300,
     marginTop: 30,
+  },
+  btnVoltar: {
+    height: 50,
+    paddingBottom: 5,
+    width: 130,
+    color: "white",
+    borderRadius: 8,
+    color: "#a0a0a0",
+    backgroundColor: "#ebebeb",
+    textAlignVertical: "center",
+    textAlign: "center",
+    justifyContent: "center",
+    fontSize: 20,
+  },
+  btnEnable: {
+    height: 50,
+    width: 130,
+    paddingBottom: 5,
+    color: "white",
+    borderRadius: 8,
+    color: "#fff",
+    backgroundColor: "#CC5353",
+    textAlignVertical: "center",
+    textAlign: "center",
+    justifyContent: "center",
+    fontSize: 20,
   },
 });
