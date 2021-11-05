@@ -25,7 +25,7 @@ export default function InitialSreen({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity
           style={{ display: "flex", alignItems: "center", marginTop: 20 }}
-          onPress={navigation.navigate("CompanyRegistration")}
+          onPress={() => navigation.navigate("CompanyRegistration")}
         >
           <Text style={styles.btnEnable}>weFeed para empresas</Text>
         </TouchableOpacity>

@@ -1,33 +1,42 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
+import InputWithIcon from "../components/input/InputWithIcon";
 export default function InitialSreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <View style={{ alignItems: "center", height: "15%" }}>
+      <View style={{ alignItems: "center", height: "13%" }}>
         <Image source={require("../assets/logo.png")} style={styles.imagem} />
       </View>
-      <View style={{ alignItems: "center", height: "45%" }}>
-        <Image
-          source={require("../assets/initialSreenImg.png")}
-          style={styles.donateImagem}
-        />
+      <View style={{ alignItems: "center", height: "6%", marginBottom: 15 }}>
+        <Text style={styles.titulo}>Cadastro de Empresa</Text>
       </View>
       <View style={styles.containerSecondary}>
-        <View style={{ marginTop: 20 }}>
-          <Text style={styles.titulo}>Comece já!!</Text>
-          <Text style={styles.titulo}>É totalmente gratuito.</Text>
-        </View>
-        <TouchableOpacity
-          style={{ display: "flex", alignItems: "center", marginTop: 30 }}
-        >
-          <Text style={styles.btnDisable}>Sou pessoa física</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{ display: "flex", alignItems: "center", marginTop: 20 }}
-        >
-          <Text style={styles.btnEnable}>weFeed para empresas</Text>
-        </TouchableOpacity>
+        <InputWithIcon title="Nome fantasia"></InputWithIcon>
+        <InputWithIcon title="E-mail para login"></InputWithIcon>
+        <InputWithIcon title="Endereço"></InputWithIcon>
+        <InputWithIcon title="Cnpj"></InputWithIcon>
+        <InputWithIcon title="Nova Senha"></InputWithIcon>
+        <InputWithIcon title="Senha"></InputWithIcon>
+        {/* <View style={{ display: "flex", flexDirection: "row" }}>
+          <TouchableOpacity
+            style={{ display: "flex", alignItems: "center", marginTop: 30 }}
+          >
+            <Text style={styles.btnDisable}>Voltar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ display: "flex", alignItems: "center", marginTop: 20 }}
+            onPress={() => navigation.navigate("CompanyRegistration")}
+          >
+            <Text style={styles.btnEnable}>Salvar</Text>
+          </TouchableOpacity>
+        </View> */}
       </View>
     </View>
   );
@@ -64,36 +73,12 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     borderRadius: 30,
+    display: "flex",
+    alignItems: "center",
   },
   donateImagem: {
     width: 400,
     height: 300,
     marginTop: 30,
-  },
-  btnDisable: {
-    height: 50,
-    width: "75%",
-    paddingBottom: 5,
-    color: "white",
-    borderRadius: 8,
-    color: "#a0a0a0",
-    backgroundColor: "#ebebeb",
-    textAlignVertical: "center",
-    textAlign: "center",
-    justifyContent: "center",
-    fontSize: 20,
-  },
-  btnEnable: {
-    height: 50,
-    width: "75%",
-    paddingBottom: 5,
-    color: "white",
-    borderRadius: 8,
-    color: "#fff",
-    backgroundColor: "#CC5353",
-    textAlignVertical: "center",
-    textAlign: "center",
-    justifyContent: "center",
-    fontSize: 20,
   },
 });
