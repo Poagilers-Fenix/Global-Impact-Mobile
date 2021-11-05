@@ -4,7 +4,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "react-native";
 
 import InitialScreen from "./pages/InitialScreen";
-import CompanyRegistration from "./pages/companyRegistration";
+import CompanyRegistration from "./pages/CompanyRegistration";
+import CompanyLogin from "./pages/CompanyLogin";
+import MenuScreen from "./pages/MenuScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +23,8 @@ export default function App() {
           name="CompanyRegistration"
           component={CompanyRegistration}
         />
+        <Stack.Screen name="CompanyLogin" component={CompanyLogin} />
+        <Stack.Screen name="MenuScreen" component={MenuScreen} />
       </Stack.Navigator>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
     </NavigationContainer>

@@ -8,21 +8,23 @@ import {
   TextInput,
 } from "react-native";
 import InputWithIcon from "../components/input/InputWithIcon";
-export default function CompanyRegistration({ navigation }) {
+export default function CompanyLogin({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={{ alignItems: "center", height: "13%" }}>
         <Image source={require("../assets/logo.png")} style={styles.imagem} />
       </View>
-      <View style={{ alignItems: "center", height: "6%", marginBottom: 15 }}>
-        <Text style={styles.titulo}>Cadastro de Empresa</Text>
+      <View>
+        <Image
+          source={require("../assets/LoginImg.png")}
+          style={styles.imagemLogin}
+        />
       </View>
       <View style={styles.containerSecondary}>
-        <InputWithIcon title="Nome fantasia"></InputWithIcon>
-        <InputWithIcon title="E-mail para login"></InputWithIcon>
-        <InputWithIcon title="Endereço"></InputWithIcon>
-        <InputWithIcon title="Cnpj"></InputWithIcon>
-        <InputWithIcon title="Nova Senha"></InputWithIcon>
+        <View style={{ alignItems: "center", height: "6%", marginBottom: 15 }}>
+          <Text style={styles.titulo}>Login de Empresa</Text>
+        </View>
+        <InputWithIcon title="E-mail"></InputWithIcon>
         <InputWithIcon title="Senha"></InputWithIcon>
         <View style={{ display: "flex", flexDirection: "row" }}>
           <TouchableOpacity
@@ -37,7 +39,7 @@ export default function CompanyRegistration({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             style={{ display: "flex", alignItems: "center", marginTop: 30 }}
-            onPress={() => navigation.navigate("MenuScreen")}
+            onPress={() => navigation.navigate("CompanyRegistration")}
           >
             <Text style={styles.btnEnable}>Salvar</Text>
           </TouchableOpacity>
@@ -81,11 +83,6 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
   },
-  donateImagem: {
-    width: 400,
-    height: 300,
-    marginTop: 30,
-  },
   btnVoltar: {
     height: 50,
     paddingBottom: 5,
@@ -111,5 +108,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     justifyContent: "center",
     fontSize: 20,
+  },
+  imagemLogin: {
+    width: 400,
+    height: 350,
+    marginTop: 10,
   },
 });

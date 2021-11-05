@@ -8,41 +8,42 @@ import {
   TextInput,
 } from "react-native";
 import InputWithIcon from "../components/input/InputWithIcon";
-export default function CompanyRegistration({ navigation }) {
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+export default function MenuScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <View style={{ alignItems: "center", height: "13%" }}>
+      <View
+        style={{ alignItems: "center", height: "13%", flexDirection: "row" }}
+      >
+        <MaterialCommunityIcons
+          name="format-list-bulleted"
+          size={42}
+          color="#666"
+          style={{ marginLeft: 10, marginTop: 18 }}
+        />
         <Image source={require("../assets/logo.png")} style={styles.imagem} />
       </View>
-      <View style={{ alignItems: "center", height: "6%", marginBottom: 15 }}>
-        <Text style={styles.titulo}>Cadastro de Empresa</Text>
+      <View style={{ display: "flex", flexDirection: "row", padding: 15 }}>
+        <TextInput
+          style={{
+            paddingLeft: 5,
+            flex: 1,
+            height: 50,
+            borderWidth: 2,
+            borderColor: "#666",
+            borderTopLeftRadius: 10,
+            borderBottomLeftRadius: 10,
+          }}
+          placeholder="Pesquisar"
+        />
+        <TouchableOpacity
+          style={{ display: "flex", alignItems: "center" }}
+          onPress={() => navigation.navigate("MenuScreen")}
+        >
+          <Text style={styles.btnEnable}>Novo item</Text>
+        </TouchableOpacity>
       </View>
-      <View style={styles.containerSecondary}>
-        <InputWithIcon title="Nome fantasia"></InputWithIcon>
-        <InputWithIcon title="E-mail para login"></InputWithIcon>
-        <InputWithIcon title="Endereço"></InputWithIcon>
-        <InputWithIcon title="Cnpj"></InputWithIcon>
-        <InputWithIcon title="Nova Senha"></InputWithIcon>
-        <InputWithIcon title="Senha"></InputWithIcon>
-        <View style={{ display: "flex", flexDirection: "row" }}>
-          <TouchableOpacity
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginTop: 30,
-              marginRight: 30,
-            }}
-          >
-            <Text style={styles.btnVoltar}>Voltar</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ display: "flex", alignItems: "center", marginTop: 30 }}
-            onPress={() => navigation.navigate("MenuScreen")}
-          >
-            <Text style={styles.btnEnable}>Salvar</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <View style={styles.containerSecondary}></View>
     </View>
   );
 }
@@ -70,8 +71,7 @@ const styles = StyleSheet.create({
   imagem: {
     width: 200,
     height: 60,
-    marginTop: 30,
-    marginBottom: 40,
+    marginLeft: 50,
   },
   containerSecondary: {
     backgroundColor: "#B7DBD2",
@@ -80,11 +80,6 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     display: "flex",
     alignItems: "center",
-  },
-  donateImagem: {
-    width: 400,
-    height: 300,
-    marginTop: 30,
   },
   btnVoltar: {
     height: 50,
@@ -104,12 +99,18 @@ const styles = StyleSheet.create({
     width: 130,
     paddingBottom: 5,
     color: "white",
-    borderRadius: 8,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
     color: "#fff",
     backgroundColor: "#CC5353",
     textAlignVertical: "center",
     textAlign: "center",
     justifyContent: "center",
     fontSize: 20,
+  },
+  imagemLogin: {
+    width: 400,
+    height: 350,
+    marginTop: 10,
   },
 });
