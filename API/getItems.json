@@ -1,0 +1,19 @@
+[
+  {
+    "id": "1",
+    "name": "Arroz",
+    "image": "https://ilustrado.com.br/wp-content/uploads/2020/09/arroz_preco_alto-693x520.jpg"
+  },
+
+  {
+    "id": "2",
+    "name": "Batata",
+    "image": "https://ilustrado.com.br/wp-content/uploads/2020/09/arroz_preco_alto-693x520.jpg"
+  },
+
+  {
+    "id": "3",
+    "name": "Feijão",
+    "image": "https://s2.glbimg.com/hXQTr-7k31NgvaaUhUiNJ2CyC6o=/780x440/e.glbimg.com/og/ed/f/original/2018/10/25/feijao_1.jpg"
+  }
+]
