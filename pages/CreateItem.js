@@ -23,28 +23,37 @@ export default function MenuScreen({ navigation }) {
         />
         <Image source={require("../assets/logo.png")} style={styles.imagem} />
       </View>
-      <View style={{ display: "flex", flexDirection: "row", padding: 15 }}>
-        <TextInput
-          style={{
-            paddingLeft: 15,
-            flex: 1,
-            height: 50,
-            borderWidth: 2,
-            borderColor: "#666",
-            borderTopLeftRadius: 10,
-            borderBottomLeftRadius: 10,
-          }}
-          placeholder="Pesquisar"
+      <View>
+        <View style={{ alignItems: "center", height: "12%", marginBottom: 15 }}>
+          <Text style={styles.titulo}>Cadastro de um item</Text>
+        </View>
+        <Image
+          source={require("../assets/CreateItemImg.png")}
+          style={styles.imagemItem}
         />
-        <TouchableOpacity
-          style={{ display: "flex", alignItems: "center" }}
-          onPress={() => navigation.navigate("CreateItem")}
-        >
-          <Text style={styles.btnEnable}>Novo item</Text>
-        </TouchableOpacity>
       </View>
-
-      <View style={styles.containerSecondary}></View>
+      <View style={styles.containerSecondary}>
+        <InputWithIcon title="Nome"></InputWithIcon>
+        <InputWithIcon title="Imagem"></InputWithIcon>
+        <View style={{ display: "flex", flexDirection: "row" }}>
+          <TouchableOpacity
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: 30,
+              marginRight: 30,
+            }}
+          >
+            <Text style={styles.btnVoltar}>Voltar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ display: "flex", alignItems: "center", marginTop: 30 }}
+            onPress={() => navigation.navigate("CompanyRegistration")}
+          >
+            <Text style={styles.btnEnable}>Salvar</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 }
@@ -100,8 +109,7 @@ const styles = StyleSheet.create({
     width: 130,
     paddingBottom: 5,
     color: "white",
-    borderTopRightRadius: 10,
-    borderBottomRightRadius: 10,
+    borderRadius: 10,
     color: "#fff",
     backgroundColor: "#CC5353",
     textAlignVertical: "center",
@@ -109,9 +117,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     fontSize: 20,
   },
-  imagemLogin: {
+  imagemItem: {
     width: 400,
-    height: 350,
+    height: 300,
     marginTop: 10,
   },
 });

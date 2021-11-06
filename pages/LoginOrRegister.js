@@ -9,26 +9,26 @@ export default function InitialSreen({ navigation }) {
       </View>
       <View style={{ alignItems: "center", height: "45%" }}>
         <Image
-          source={require("../assets/initialSreenImg.png")}
-          style={styles.donateImagem}
+          source={require("../assets/lockImg.png")}
+          style={styles.lockImagem}
         />
       </View>
       <View style={styles.containerSecondary}>
         <View style={{ marginTop: 20 }}>
-          <Text style={styles.titulo}>Comece já!!</Text>
-          <Text style={styles.titulo}>É totalmente gratuito.</Text>
+          <Text style={styles.titulo}>Escolha uma das opções</Text>
+          <Text style={styles.titulo}>Para entrar no weFeed</Text>
         </View>
         <TouchableOpacity
           style={{ display: "flex", alignItems: "center", marginTop: 30 }}
-          onPress={() => navigation.navigate("CreateItem")}
+          onPress={() => navigation.navigate("CompanyLogin")}
         >
-          <Text style={styles.btnDisable}>Sou pessoa física</Text>
+          <Text style={styles.btnDisable}>Fazer Login</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={{ display: "flex", alignItems: "center", marginTop: 20 }}
-          onPress={() => navigation.navigate("LoginOrRegister")}
+          onPress={() => navigation.navigate("CompanyRegistration")}
         >
-          <Text style={styles.btnEnable}>weFeed para empresas</Text>
+          <Text style={styles.btnEnable}>Realizar Cadastro</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     width: "100%",
     borderRadius: 30,
   },
-  donateImagem: {
+  lockImagem: {
     width: 400,
     height: 300,
     marginTop: 30,

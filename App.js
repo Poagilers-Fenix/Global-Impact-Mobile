@@ -7,6 +7,8 @@ import InitialScreen from "./pages/InitialScreen";
 import CompanyRegistration from "./pages/CompanyRegistration";
 import CompanyLogin from "./pages/CompanyLogin";
 import MenuScreen from "./pages/MenuScreen";
+import CreateItem from "./pages/CreateItem";
+import LoginOrRegister from "./pages/LoginOrRegister";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +27,8 @@ export default function App() {
         />
         <Stack.Screen name="CompanyLogin" component={CompanyLogin} />
         <Stack.Screen name="MenuScreen" component={MenuScreen} />
+        <Stack.Screen name="CreateItem" component={CreateItem} />
+        <Stack.Screen name="LoginOrRegister" component={LoginOrRegister} />
       </Stack.Navigator>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
     </NavigationContainer>
