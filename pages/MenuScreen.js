@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
 import {
   View,
   Text,
@@ -6,10 +7,48 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  ActivityIndicator,
+  SafeAreaView,
+  FlatList,
 } from "react-native";
 import InputWithIcon from "../components/input/InputWithIcon";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+const getItems = require("../API/getItems.json");
+import { Picker } from "@react-native-picker/picker";
 export default function MenuScreen({ navigation }) {
+  const [isLoading, setLoading] = useState(false);
+  const [estadoItem, setEstadoItem] = useState("");
+  const renderItem = ({ item }) => (
+    <View style={styles.subContainer}>
+      <View style={styles.cardList}>
+        <Text
+          style={(styles.cardText, { color: "#CC5353", fontWeight: "bold" })}
+        >
+          {item.name}
+        </Text>
+      </View>
+      <View style={styles.viewPicker}>
+        <Picker
+          style={styles.pickerStyle}
+          selectedValue={estadoItem}
+          onValueChange={(itemValue) => setEstadoItem(itemValue)}
+        >
+          <Picker.Item label="Crítico" value={"critico"} />
+          <Picker.Item label="Moderado" value={"moderado"} />
+          <Picker.Item label="Bom" value={"bom"} />
+        </Picker>
+      </View>
+      <Image
+        style={styles.imgList}
+        source={{
+          uri:
+            item.image == null
+              ? "https://raw.githubusercontent.com/Poagilers-Fenix/WebApp-Challenge/main/Imagens/no-image-found.png?token=AOXNWKVBRD3WDDJKASDBZT3BHUBDY"
+              : item.image,
+        }}
+      ></Image>
+    </View>
+  );
   return (
     <View style={styles.container}>
       <View
@@ -43,8 +82,20 @@ export default function MenuScreen({ navigation }) {
           <Text style={styles.btnEnable}>Novo item</Text>
         </TouchableOpacity>
       </View>
-
-      <View style={styles.containerSecondary}></View>
+      <View style={styles.containerSecondary}>
+        <SafeAreaView style={(styles.container, { marginBottom: 140 })}>
+          {isLoading && (
+            <View style={styles.messageContainer}>
+              <ActivityIndicator size="large" color="blue" />
+            </View>
+          )}
+          <FlatList
+            data={getItems}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+          />
+        </SafeAreaView>
+      </View>
     </View>
   );
 }
@@ -62,12 +113,8 @@ const styles = StyleSheet.create({
   },
   titulo: {
     fontSize: 26,
-    flexWrap: "wrap",
-    textAlign: "center",
     color: "#666",
     marginTop: 10,
-    textAlign: "center",
-    fontWeight: "bold",
   },
   imagem: {
     width: 200,
@@ -113,5 +160,44 @@ const styles = StyleSheet.create({
     width: 400,
     height: 350,
     marginTop: 10,
+  },
+  imgList: {
+    width: 100,
+    height: 100,
+    borderRadius: 7,
+    marginRight: 9,
+  },
+  cardList: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+
+    borderRadius: 7,
+
+    width: 80,
+  },
+  cardText: {
+    marginHorizontal: 0,
+  },
+  subContainer: {
+    display: "flex",
+    flexDirection: "row",
+    margin: 10,
+    padding: 10,
+    backgroundColor: "#fff",
+    borderRadius: 7,
+  },
+  pickerStyle: {
+    width: 130,
+  },
+  viewPicker: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    marginHorizontal: 20,
+    marginVertical: 25,
+    borderWidth: 1,
+    borderColor: "#aaa",
+    borderRadius: 7,
   },
 });
