@@ -11,7 +11,7 @@ import {
   SafeAreaView,
   FlatList,
 } from "react-native";
-import InputWithIcon from "../components/input/InputWithIcon";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 const getItems = require("../API/getItems.json");
 import { Picker } from "@react-native-picker/picker";
@@ -19,7 +19,7 @@ export default function MenuScreen({ navigation }) {
   const [isLoading, setLoading] = useState(false);
   const [estadoItem, setEstadoItem] = useState("");
   const renderItem = ({ item }) => (
-    <View style={styles.subContainer}>
+    <View style={styles.containerFletList}>
       <View style={styles.cardList}>
         <Text
           style={(styles.cardText, { color: "#CC5353", fontWeight: "bold" })}
@@ -27,26 +27,32 @@ export default function MenuScreen({ navigation }) {
           {item.name}
         </Text>
       </View>
-      <View style={styles.viewPicker}>
-        <Picker
-          style={styles.pickerStyle}
-          selectedValue={estadoItem}
-          onValueChange={(itemValue) => setEstadoItem(itemValue)}
-        >
-          <Picker.Item label="Crítico" value={"critico"} />
-          <Picker.Item label="Moderado" value={"moderado"} />
-          <Picker.Item label="Bom" value={"bom"} />
-        </Picker>
+      <View
+        style={{ height: 2, backgroundColor: "#CC5353", marginBottom: 6 }}
+      ></View>
+      <View style={styles.subContainer}>
+        <BouncyCheckbox onPress={(isChecked) => {}} fillColor="#CC5353" />
+        <View style={styles.viewPicker}>
+          <Picker
+            style={styles.pickerStyle}
+            selectedValue={estadoItem}
+            onValueChange={(itemValue) => setEstadoItem(itemValue)}
+          >
+            <Picker.Item label="Crítico" value={"critico"} />
+            <Picker.Item label="Moderado" value={"moderado"} />
+            <Picker.Item label="Bom" value={"bom"} />
+          </Picker>
+        </View>
+        <Image
+          style={styles.imgList}
+          source={{
+            uri:
+              item.image == null
+                ? "https://raw.githubusercontent.com/Poagilers-Fenix/WebApp-Challenge/main/Imagens/no-image-found.png?token=AOXNWKVBRD3WDDJKASDBZT3BHUBDY"
+                : item.image,
+          }}
+        ></Image>
       </View>
-      <Image
-        style={styles.imgList}
-        source={{
-          uri:
-            item.image == null
-              ? "https://raw.githubusercontent.com/Poagilers-Fenix/WebApp-Challenge/main/Imagens/no-image-found.png?token=AOXNWKVBRD3WDDJKASDBZT3BHUBDY"
-              : item.image,
-        }}
-      ></Image>
     </View>
   );
   return (
@@ -79,7 +85,7 @@ export default function MenuScreen({ navigation }) {
           style={{ display: "flex", alignItems: "center" }}
           onPress={() => navigation.navigate("CreateItem")}
         >
-          <Text style={styles.btnEnable}>Novo item</Text>
+          <Text style={styles.btnNewItem}>Novo item</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.containerSecondary}>
@@ -94,6 +100,12 @@ export default function MenuScreen({ navigation }) {
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
           />
+          <TouchableOpacity
+            style={{ display: "flex", alignItems: "center", marginTop: 20 }}
+            onPress={() => navigation.navigate("ResumeSreen")}
+          >
+            <Text style={styles.btnEnable}>Próxima Etapa</Text>
+          </TouchableOpacity>
         </SafeAreaView>
       </View>
     </View>
@@ -122,6 +134,8 @@ const styles = StyleSheet.create({
     marginLeft: 50,
   },
   containerSecondary: {
+    paddingTop: 25,
+    paddingBottom: 45,
     backgroundColor: "#B7DBD2",
     height: "100%",
     width: "100%",
@@ -143,6 +157,20 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   btnEnable: {
+    height: 50,
+    width: "75%",
+    paddingBottom: 5,
+    color: "white",
+    borderRadius: 8,
+    color: "#fff",
+    backgroundColor: "#CC5353",
+    textAlignVertical: "center",
+    textAlign: "center",
+    justifyContent: "center",
+    marginBottom: 15,
+    fontSize: 20,
+  },
+  btnNewItem: {
     height: 50,
     width: 130,
     paddingBottom: 5,
@@ -173,8 +201,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
 
     borderRadius: 7,
-
-    width: 80,
   },
   cardText: {
     marginHorizontal: 0,
@@ -182,6 +208,8 @@ const styles = StyleSheet.create({
   subContainer: {
     display: "flex",
     flexDirection: "row",
+  },
+  containerFletList: {
     margin: 10,
     padding: 10,
     backgroundColor: "#fff",

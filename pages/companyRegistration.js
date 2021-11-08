@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   containerSecondary: {
+    paddingTop: 25,
     backgroundColor: "#B7DBD2",
     height: "100%",
     width: "100%",

@@ -9,6 +9,7 @@ import CompanyLogin from "./pages/CompanyLogin";
 import MenuScreen from "./pages/MenuScreen";
 import CreateItem from "./pages/CreateItem";
 import LoginOrRegister from "./pages/LoginOrRegister";
+import ResumeSreen from "./pages/ResumeSreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +30,7 @@ export default function App() {
         <Stack.Screen name="MenuScreen" component={MenuScreen} />
         <Stack.Screen name="CreateItem" component={CreateItem} />
         <Stack.Screen name="LoginOrRegister" component={LoginOrRegister} />
+        <Stack.Screen name="ResumeSreen" component={ResumeSreen} />
       </Stack.Navigator>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
     </NavigationContainer>
