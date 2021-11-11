@@ -9,6 +9,7 @@ export default function InputWithIcon({
   onChange,
   value,
   secureText,
+  onBlur,
 }) {
   return (
     <View style={styles.inputContainer}>
@@ -16,6 +17,7 @@ export default function InputWithIcon({
       <View style={styles.input}>
         <MaterialCommunityIcons name={icon} size={22} color="#666" />
         <TextInput
+          onBlur={onBlur}
           style={{ paddingLeft: 5, flex: 1, height: 50 }}
           keyboardType={type}
           onChangeText={onChange}

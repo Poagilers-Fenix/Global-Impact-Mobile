@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,21 +6,35 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  ActivityIndicator,
 } from "react-native";
 import InputWithIcon from "../components/input/InputWithIcon";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { createItems } from "../API/ApiManager";
+import SideBar from "../components/SideBar";
+import { ScrollView } from "react-native-gesture-handler";
+
 export default function MenuScreen({ navigation }) {
+  const [name, setName] = useState(false);
+  const [image, setImage] = useState("");
+  const [loading, isLoading] = useState(false);
+
+  const pressSave = async () => {
+    isLoading(true);
+    await createItems({
+      nome: name,
+      image: image,
+    });
+    isLoading(false);
+    navigation.navigate("MenuScreen");
+  };
+
   return (
     <View style={styles.container}>
       <View
         style={{ alignItems: "center", height: "13%", flexDirection: "row" }}
       >
-        <MaterialCommunityIcons
-          name="format-list-bulleted"
-          size={42}
-          color="#666"
-          style={{ marginLeft: 10, marginTop: 18 }}
-        />
+        <SideBar navigation={navigation}></SideBar>
         <Image source={require("../assets/logo.png")} style={styles.imagem} />
       </View>
       <View>
@@ -33,26 +47,33 @@ export default function MenuScreen({ navigation }) {
         />
       </View>
       <View style={styles.containerSecondary}>
-        <InputWithIcon title="Nome"></InputWithIcon>
-        <InputWithIcon title="Imagem"></InputWithIcon>
-        <View style={{ display: "flex", flexDirection: "row" }}>
-          <TouchableOpacity
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginTop: 30,
-              marginRight: 30,
-            }}
-          >
-            <Text style={styles.btnVoltar}>Voltar</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ display: "flex", alignItems: "center", marginTop: 30 }}
-            onPress={() => navigation.navigate("CompanyRegistration")}
-          >
-            <Text style={styles.btnEnable}>Salvar</Text>
-          </TouchableOpacity>
-        </View>
+        <ScrollView>
+          <InputWithIcon title="Nome" onChange={setName}></InputWithIcon>
+          <InputWithIcon title="Imagem" onChange={setImage}></InputWithIcon>
+          <View style={{ display: "flex", flexDirection: "row" }}>
+            <TouchableOpacity
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginTop: 30,
+                marginRight: 30,
+              }}
+            >
+              <Text style={styles.btnVoltar}>Voltar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ display: "flex", alignItems: "center", marginTop: 30 }}
+              onPress={pressSave}
+            >
+              {loading && (
+                <Text style={styles.btnEnable}>
+                  <ActivityIndicator size="large" color="#fff" />
+                </Text>
+              )}
+              {!loading && <Text style={styles.btnEnable}>Salvar </Text>}
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </View>
     </View>
   );
@@ -84,10 +105,12 @@ const styles = StyleSheet.create({
     marginLeft: 50,
   },
   containerSecondary: {
+    flex: 1,
     backgroundColor: "#B7DBD2",
     height: "100%",
     width: "100%",
-    borderRadius: 30,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
     display: "flex",
     alignItems: "center",
   },

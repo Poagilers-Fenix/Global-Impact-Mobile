@@ -9,29 +9,52 @@ import {
   SafeAreaView,
 } from "react-native";
 import InputWithIcon from "../components/input/InputWithIcon";
-const getItems = require("../API/getItems.json");
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-export default function MenuScreen({ navigation }) {
+import SideBar from "../components/SideBar";
+
+export default function MenuScreen({ navigation, route }) {
+  let { itemsSelected } = route.params;
   const renderItem = ({ item }) => (
     <View style={styles.containerFletList}>
       <View style={styles.subContainer}>
-        <View style={styles.cardList}>
-          <Text
-            style={(styles.cardText, { color: "#CC5353", fontWeight: "bold" })}
-          >
-            {item.name}
-          </Text>
+        <View style={{ display: "flex", flexDirection: "row" }}>
+          <Image
+            style={styles.imgList}
+            source={{
+              uri:
+                item.image == null
+                  ? "https://raw.githubusercontent.com/Poagilers-Fenix/WebApp-Challenge/main/Imagens/no-image-found.png?token=AOXNWKVBRD3WDDJKASDBZT3BHUBDY"
+                  : item.image,
+            }}
+          ></Image>
+          <View style={styles.cardList}>
+            <Text
+              style={
+                (styles.cardText, { color: "#CC5353", fontWeight: "bold" })
+              }
+            >
+              {item.nome}
+            </Text>
+          </View>
         </View>
-
-        <Image
-          style={styles.imgList}
-          source={{
-            uri:
-              item.image == null
-                ? "https://raw.githubusercontent.com/Poagilers-Fenix/WebApp-Challenge/main/Imagens/no-image-found.png?token=AOXNWKVBRD3WDDJKASDBZT3BHUBDY"
-                : item.image,
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
           }}
-        ></Image>
+        >
+          <MaterialCommunityIcons
+            name={"account-edit"}
+            size={26}
+            color="#CC5353"
+          />
+          <MaterialCommunityIcons
+            name={"trash-can-outline"}
+            size={26}
+            color="#CC5353"
+          />
+        </View>
       </View>
     </View>
   );
@@ -45,24 +68,19 @@ export default function MenuScreen({ navigation }) {
           flexDirection: "row",
         }}
       >
-        <MaterialCommunityIcons
-          name="format-list-bulleted"
-          size={42}
-          color="#666"
-          style={{ marginLeft: 10, marginTop: 18 }}
-        />
+        <SideBar navigation={navigation}></SideBar>
         <Image source={require("../assets/logo.png")} style={styles.imagem} />
       </View>
       <View style={{ alignItems: "center", height: "8%", marginBottom: 15 }}>
         <Text style={styles.titulo}>Concluir Solicitaçao</Text>
-        <Text>Existem {getItems.length} item(s) para envio</Text>
+        <Text>Existem {itemsSelected.length} item(s) para envio</Text>
       </View>
       <View style={styles.containerSecondary}>
         <SafeAreaView style={(styles.container, { marginBottom: 210 })}>
           <FlatList
-            data={getItems}
+            data={itemsSelected}
             renderItem={renderItem}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.itemId}
           />
           <TouchableOpacity
             style={{ display: "flex", alignItems: "center" }}

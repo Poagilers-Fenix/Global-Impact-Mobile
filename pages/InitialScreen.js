@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 
 export default function InitialSreen({ navigation }) {
   return (
@@ -20,7 +27,13 @@ export default function InitialSreen({ navigation }) {
         </View>
         <TouchableOpacity
           style={{ display: "flex", alignItems: "center", marginTop: 30 }}
-          onPress={() => navigation.navigate("CreateItem")}
+          onPress={() =>
+            // Alert.alert(
+            //   "Aviso",
+            //   "Este recurso ainda não está disponível!! Vem novidade por aí...."
+            // )
+            navigation.navigate("MenuScreen")
+          }
         >
           <Text style={styles.btnDisable}>Sou pessoa física</Text>
         </TouchableOpacity>

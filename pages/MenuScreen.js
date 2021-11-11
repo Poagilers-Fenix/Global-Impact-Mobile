@@ -13,43 +13,79 @@ import {
 } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-const getItems = require("../API/getItems.json");
+import { getItems } from "../API/ApiManager";
 import { Picker } from "@react-native-picker/picker";
+import SideBar from "../components/SideBar";
 export default function MenuScreen({ navigation }) {
-  const [isLoading, setLoading] = useState(false);
   const [estadoItem, setEstadoItem] = useState("");
+  const [isCheckList, setIsCheckList] = useState([]);
+  const [listItens, setListItens] = useState([]);
+  const [loading, isLoading] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      isLoading(true);
+      setIsCheckList([]);
+      const res = await getItems();
+      listItens.push(res);
+      isLoading(false);
+    }
+    fetchData();
+  }, []);
+  const notCheck = (item) => {
+    isCheckList.map((itemInList, i) => {
+      if (itemInList.id == item.id) {
+        isCheckList.splice(i, 1);
+      }
+    });
+  };
   const renderItem = ({ item }) => (
     <View style={styles.containerFletList}>
       <View style={styles.cardList}>
         <Text
           style={(styles.cardText, { color: "#CC5353", fontWeight: "bold" })}
         >
-          {item.name}
+          {item.nome}
         </Text>
       </View>
       <View
         style={{ height: 2, backgroundColor: "#CC5353", marginBottom: 6 }}
       ></View>
       <View style={styles.subContainer}>
-        <BouncyCheckbox onPress={(isChecked) => {}} fillColor="#CC5353" />
+        <BouncyCheckbox
+          onPress={(isChecked) => {
+            if (isChecked) {
+              isCheckList.push(item);
+            } else {
+              notCheck(item);
+            }
+          }}
+          fillColor="#CC5353"
+        />
+        <View style={styles.input}>
+          <TextInput
+            placeholder="Qtd"
+            style={{ paddingLeft: 5, flex: 1, height: 50 }}
+          ></TextInput>
+        </View>
         <View style={styles.viewPicker}>
           <Picker
             style={styles.pickerStyle}
             selectedValue={estadoItem}
             onValueChange={(itemValue) => setEstadoItem(itemValue)}
           >
-            <Picker.Item label="Crítico" value={"critico"} />
-            <Picker.Item label="Moderado" value={"moderado"} />
-            <Picker.Item label="Bom" value={"bom"} />
+            <Picker.Item label="Unidades" value={"Unidades"} />
+            <Picker.Item label="Quilos" value={"Quilos"} />
+            <Picker.Item label="Litros" value={"Litros"} />
           </Picker>
         </View>
         <Image
           style={styles.imgList}
           source={{
             uri:
-              item.image == null
+              item.foto == null
                 ? "https://raw.githubusercontent.com/Poagilers-Fenix/WebApp-Challenge/main/Imagens/no-image-found.png?token=AOXNWKVBRD3WDDJKASDBZT3BHUBDY"
-                : item.image,
+                : item.foto,
           }}
         ></Image>
       </View>
@@ -60,12 +96,7 @@ export default function MenuScreen({ navigation }) {
       <View
         style={{ alignItems: "center", height: "13%", flexDirection: "row" }}
       >
-        <MaterialCommunityIcons
-          name="format-list-bulleted"
-          size={42}
-          color="#666"
-          style={{ marginLeft: 10, marginTop: 18 }}
-        />
+        <SideBar navigation={navigation}></SideBar>
         <Image source={require("../assets/logo.png")} style={styles.imagem} />
       </View>
       <View style={{ display: "flex", flexDirection: "row", padding: 15 }}>
@@ -90,19 +121,26 @@ export default function MenuScreen({ navigation }) {
       </View>
       <View style={styles.containerSecondary}>
         <SafeAreaView style={(styles.container, { marginBottom: 140 })}>
-          {isLoading && (
+          {loading && (
             <View style={styles.messageContainer}>
               <ActivityIndicator size="large" color="blue" />
             </View>
           )}
-          <FlatList
-            data={getItems}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-          />
+          {!loading && (
+            <FlatList
+              data={listItens[0]}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.itemId}
+            />
+          )}
           <TouchableOpacity
             style={{ display: "flex", alignItems: "center", marginTop: 20 }}
-            onPress={() => navigation.navigate("ResumeSreen")}
+            onPress={() =>
+              navigation.navigate({
+                name: "ResumeSreen",
+                params: { itemsSelected: isCheckList },
+              })
+            }
           >
             <Text style={styles.btnEnable}>Próxima Etapa</Text>
           </TouchableOpacity>
@@ -216,16 +254,23 @@ const styles = StyleSheet.create({
     borderRadius: 7,
   },
   pickerStyle: {
-    width: 130,
+    width: 90,
   },
   viewPicker: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     marginHorizontal: 20,
-    marginVertical: 25,
+    marginVertical: 30,
     borderWidth: 1,
     borderColor: "#aaa",
     borderRadius: 7,
+  },
+  input: {
+    borderColor: "#aaa",
+    borderWidth: 1,
+    borderRadius: 5,
+    marginVertical: 30,
+    width: 50,
   },
 });

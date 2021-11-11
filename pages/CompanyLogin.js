@@ -1,14 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
   TextInput,
+  Alert,
 } from "react-native";
 import InputWithIcon from "../components/input/InputWithIcon";
+import { getCompanies } from "../API/ApiManager";
+import { ScrollView } from "react-native-gesture-handler";
+
 export default function CompanyLogin({ navigation }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [listCompanies, setListCompanies] = useState([]);
+  const [loading, isLoading] = useState(false);
+
+  const pressSave = async () => {
+    if (email == "" && password == "") {
+      Alert.alert("Aviso", "Algum campo não foi preenchido");
+      return;
+    }
+    isLoading(true);
+    const res = await getCompanies();
+    listCompanies.push(res);
+    const isValid = listCompanies[0].filter((val) => {
+      if (val.email == email && val.senha == password) {
+        return "Entrou";
+      }
+    });
+    if (isValid.length > 0) {
+      isLoading(false);
+      navigation.navigate("MenuScreen");
+    } else {
+      isLoading(false);
+      Alert.alert("Aviso", "Email ou Senha incorretos");
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={{ alignItems: "center", height: "13%" }}>
@@ -24,26 +55,34 @@ export default function CompanyLogin({ navigation }) {
         <View style={{ alignItems: "center", height: "6%", marginBottom: 15 }}>
           <Text style={styles.titulo}>Login de Empresa</Text>
         </View>
-        <InputWithIcon title="E-mail"></InputWithIcon>
-        <InputWithIcon title="Senha"></InputWithIcon>
-        <View style={{ display: "flex", flexDirection: "row" }}>
-          <TouchableOpacity
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginTop: 30,
-              marginRight: 30,
-            }}
-          >
-            <Text style={styles.btnVoltar}>Voltar</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ display: "flex", alignItems: "center", marginTop: 30 }}
-            onPress={() => navigation.navigate("CompanyRegistration")}
-          >
-            <Text style={styles.btnEnable}>Salvar</Text>
-          </TouchableOpacity>
-        </View>
+        <ScrollView>
+          <InputWithIcon title="E-mail" onChange={setEmail}></InputWithIcon>
+          <InputWithIcon title="Senha" onChange={setPassword}></InputWithIcon>
+          <View style={{ display: "flex", flexDirection: "row" }}>
+            <TouchableOpacity
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginTop: 30,
+                marginRight: 30,
+              }}
+              onPress={() => navigation.navigate("LoginOrRegister")}
+            >
+              <Text style={styles.btnVoltar}>Voltar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ display: "flex", alignItems: "center", marginTop: 30 }}
+              onPress={pressSave}
+            >
+              {loading && (
+                <Text style={styles.btnEnable}>
+                  <ActivityIndicator size="large" color="#fff" />
+                </Text>
+              )}
+              {!loading && <Text style={styles.btnEnable}>Login</Text>}
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </View>
     </View>
   );
@@ -76,10 +115,12 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   containerSecondary: {
+    flex: 1,
     backgroundColor: "#B7DBD2",
     height: "100%",
-    width: "100%",
-    borderRadius: 30,
+    maxWidth: "100%",
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
     display: "flex",
     alignItems: "center",
   },
