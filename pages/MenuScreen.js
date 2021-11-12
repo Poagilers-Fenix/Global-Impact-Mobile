@@ -120,31 +120,31 @@ export default function MenuScreen({ navigation }) {
         </TouchableOpacity>
       </View>
       <View style={styles.containerSecondary}>
-        <SafeAreaView style={(styles.container, { marginBottom: 140 })}>
-          {loading && (
-            <View style={styles.messageContainer}>
-              <ActivityIndicator size="large" color="blue" />
-            </View>
-          )}
-          {!loading && (
+        {loading && (
+          <View style={styles.messageContainer}>
+            <ActivityIndicator size="large" color="blue" />
+          </View>
+        )}
+        {!loading && (
+          <SafeAreaView style={(styles.container, { marginBottom: 140 })}>
             <FlatList
               data={listItens[0]}
               renderItem={renderItem}
               keyExtractor={(item) => item.itemId}
             />
-          )}
-          <TouchableOpacity
-            style={{ display: "flex", alignItems: "center", marginTop: 20 }}
-            onPress={() =>
-              navigation.navigate({
-                name: "ResumeSreen",
-                params: { itemsSelected: isCheckList },
-              })
-            }
-          >
-            <Text style={styles.btnEnable}>Próxima Etapa</Text>
-          </TouchableOpacity>
-        </SafeAreaView>
+            <TouchableOpacity
+              style={{ display: "flex", alignItems: "center", marginTop: 20 }}
+              onPress={() =>
+                navigation.navigate({
+                  name: "ResumeSreen",
+                  params: { itemsSelected: isCheckList },
+                })
+              }
+            >
+              <Text style={styles.btnEnable}>Próxima Etapa</Text>
+            </TouchableOpacity>
+          </SafeAreaView>
+        )}
       </View>
     </View>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -10,10 +10,23 @@ import {
 } from "react-native";
 import InputWithIcon from "../components/input/InputWithIcon";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { deleteItemById } from "../API/ApiManager";
 import SideBar from "../components/SideBar";
 
 export default function MenuScreen({ navigation, route }) {
   let { itemsSelected } = route.params;
+  const deleteItem = async (val) => {
+    await deleteItemById(val);
+    itemsSelected.map((itemInList, i) => {
+      if (itemInList.itemId == val) {
+        itemsSelected.splice(i, 1);
+        navigation.navigate({
+          name: "ResumeSreen",
+          params: { itemsSelected },
+        });
+      }
+    });
+  };
   const renderItem = ({ item }) => (
     <View style={styles.containerFletList}>
       <View style={styles.subContainer}>
@@ -22,9 +35,9 @@ export default function MenuScreen({ navigation, route }) {
             style={styles.imgList}
             source={{
               uri:
-                item.image == null
+                item.foto == null
                   ? "https://raw.githubusercontent.com/Poagilers-Fenix/WebApp-Challenge/main/Imagens/no-image-found.png?token=AOXNWKVBRD3WDDJKASDBZT3BHUBDY"
-                  : item.image,
+                  : item.foto,
             }}
           ></Image>
           <View style={styles.cardList}>
@@ -44,16 +57,27 @@ export default function MenuScreen({ navigation, route }) {
             alignItems: "center",
           }}
         >
-          <MaterialCommunityIcons
-            name={"account-edit"}
-            size={26}
-            color="#CC5353"
-          />
-          <MaterialCommunityIcons
-            name={"trash-can-outline"}
-            size={26}
-            color="#CC5353"
-          />
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate({
+                name: "EditItem",
+                params: { item },
+              })
+            }
+          >
+            <MaterialCommunityIcons
+              name={"account-edit"}
+              size={26}
+              color="#CC5353"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => deleteItem(item.itemId)}>
+            <MaterialCommunityIcons
+              name={"trash-can-outline"}
+              size={26}
+              color="#CC5353"
+            />
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -76,19 +100,32 @@ export default function MenuScreen({ navigation, route }) {
         <Text>Existem {itemsSelected.length} item(s) para envio</Text>
       </View>
       <View style={styles.containerSecondary}>
-        <SafeAreaView style={(styles.container, { marginBottom: 210 })}>
-          <FlatList
-            data={itemsSelected}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.itemId}
-          />
-          <TouchableOpacity
-            style={{ display: "flex", alignItems: "center" }}
-            onPress={() => navigation.navigate("ResumeSreen")}
-          >
-            <Text style={styles.btnEnable}>Finalizar</Text>
-          </TouchableOpacity>
-        </SafeAreaView>
+        {itemsSelected.length == 0 && (
+          <View>
+            <Text style={styles.titulo}>Nada por aqui!</Text>
+            <TouchableOpacity
+              style={{ display: "flex", alignItems: "center" }}
+              onPress={() => navigation.navigate("MenuScreen")}
+            >
+              <Text style={styles.btnEnable}>Voltar</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+        {itemsSelected.length != 0 && (
+          <SafeAreaView style={(styles.container, { marginBottom: 210 })}>
+            <FlatList
+              data={itemsSelected}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.itemId}
+            />
+            <TouchableOpacity
+              style={{ display: "flex", alignItems: "center" }}
+              onPress={() => navigation.navigate("ResumeSreen")}
+            >
+              <Text style={styles.btnEnable}>Finalizar</Text>
+            </TouchableOpacity>
+          </SafeAreaView>
+        )}
       </View>
     </View>
   );

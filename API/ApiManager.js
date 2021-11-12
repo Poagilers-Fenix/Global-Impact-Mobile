@@ -55,6 +55,36 @@ export const getItems = async () => {
   }
 };
 
+export const deleteItemById = async (value) => {
+  try {
+    let response = await fetch(
+      `https://wefeed.azurewebsites.net/api/itens/${value}`,
+      {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    let json = await response.json();
+    return json;
+  } catch (error) {
+    console.log("Deu Erro");
+  }
+};
+
+export const updateItem = async (value) => {
+  try {
+    console.log(value);
+    console.log(value.itemId);
+    await fetch(`https://wefeed.azurewebsites.net/api/itens/${value.itemId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(value),
+    });
+  } catch (error) {
+    console.log("Deu Erro");
+  }
+};
+
 export const getAddressByCep = async (value) => {
   try {
     const response = await fetch(`https://viacep.com.br/ws/${value}/json/`);

@@ -10,20 +10,22 @@ import {
 } from "react-native";
 import InputWithIcon from "../components/input/InputWithIcon";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { createItems } from "../API/ApiManager";
+import { updateItem } from "../API/ApiManager";
 import SideBar from "../components/SideBar";
 import { ScrollView } from "react-native-gesture-handler";
 
-export default function CreateItem({ navigation }) {
+export default function EditItem({ navigation, route }) {
+  const { item } = route.params;
   const [name, setName] = useState(false);
   const [image, setImage] = useState("");
   const [loading, isLoading] = useState(false);
 
   const pressSave = async () => {
     isLoading(true);
-    await createItems({
+    await updateItem({
+      itemId: item.itemId,
       nome: name,
-      foto: image == "" ? undefined : image,
+      foto: image == "" ? item.foto : image,
     });
     isLoading(false);
     navigation.navigate("MenuScreen");
@@ -48,8 +50,16 @@ export default function CreateItem({ navigation }) {
       </View>
       <View style={styles.containerSecondary}>
         <ScrollView>
-          <InputWithIcon title="Nome" onChange={setName}></InputWithIcon>
-          <InputWithIcon title="Imagem" onChange={setImage}></InputWithIcon>
+          <InputWithIcon
+            title="Nome"
+            onChange={setName}
+            value={item.nome}
+          ></InputWithIcon>
+          <InputWithIcon
+            title="Imagem"
+            onChange={setImage}
+            value={item.foto}
+          ></InputWithIcon>
           <View style={{ display: "flex", flexDirection: "row" }}>
             <TouchableOpacity
               style={{
