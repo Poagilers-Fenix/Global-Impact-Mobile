@@ -30,6 +30,7 @@
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.8.0",
     "react-native-select-multiple": "^2.1.0",
+    "react-native-simple-radio-button": "^2.7.4",
     "react-native-text-input-mask": "^3.1.4",
     "react-native-web": "0.17.1"
   },

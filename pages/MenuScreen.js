@@ -33,31 +33,31 @@ export default function MenuScreen({ navigation }) {
   ];
 
   // Ativar ou desativar mock
-  let MOCK = true;
+  let MOCK = false;
 
   useEffect(() => {
     async function fetchData() {
       isLoading(true);
       const res = MOCK == true ? getItemsMock : await getItems();
       listItens.push(res);
+      if (listItens.length > 0) {
+        if (searchText === "") {
+          setList(listItens[0]);
+        } else {
+          setList(
+            listItens[0].filter((item) => {
+              if (item.nome.indexOf(searchText) > -1) {
+                return true;
+              } else {
+                return false;
+              }
+            })
+          );
+        }
+      }
       isLoading(false);
     }
     fetchData();
-    if (listItens.length > 0) {
-      if (searchText === "") {
-        setList(listItens[0]);
-      } else {
-        setList(
-          listItens[0].filter((item) => {
-            if (item.nome.indexOf(searchText) > -1) {
-              return true;
-            } else {
-              return false;
-            }
-          })
-        );
-      }
-    }
   }, [searchText]);
 
   const updateListItens = (item) => {
