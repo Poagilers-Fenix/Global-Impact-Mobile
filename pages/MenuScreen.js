@@ -10,28 +10,53 @@ import {
   ActivityIndicator,
   SafeAreaView,
   FlatList,
+  Alert,
 } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { getItems } from "../API/ApiManager";
+const getItemsMock = require("../API/ItemsMock.json");
 import { Picker } from "@react-native-picker/picker";
 import SideBar from "../components/SideBar";
 export default function MenuScreen({ navigation }) {
-  const [estadoItem, setEstadoItem] = useState("");
   const [isCheckList, setIsCheckList] = useState([]);
   const [listItens, setListItens] = useState([]);
+  const [searchText, setSearchText] = useState([]);
   const [loading, isLoading] = useState(false);
+  const [list, setList] = useState(listItens[0]);
+
+  // Ativar ou desativar mock
+  let MOCK = true;
 
   useEffect(() => {
     async function fetchData() {
       isLoading(true);
-      setIsCheckList([]);
-      const res = await getItems();
+      const res = MOCK == true ? getItemsMock : await getItems();
       listItens.push(res);
       isLoading(false);
     }
     fetchData();
-  }, []);
+    if (listItens.length > 0) {
+      if (searchText === "") {
+        setList(listItens[0]);
+      } else {
+        setList(
+          listItens[0].filter((item) => {
+            if (item.nome.indexOf(searchText) > -1) {
+              return true;
+            } else {
+              return false;
+            }
+          })
+        );
+      }
+    }
+  }, [searchText]);
+
+  const updateListItens = (item) => {
+    item.doacoesItens = { quantidade: 1, medida: "un" };
+  };
+
   const notCheck = (item) => {
     isCheckList.map((itemInList, i) => {
       if (itemInList.id == item.id) {
@@ -41,6 +66,7 @@ export default function MenuScreen({ navigation }) {
   };
   const renderItem = ({ item }) => (
     <View style={styles.containerFletList}>
+      {updateListItens(item)}
       <View style={styles.cardList}>
         <Text
           style={(styles.cardText, { color: "#CC5353", fontWeight: "bold" })}
@@ -66,17 +92,20 @@ export default function MenuScreen({ navigation }) {
           <TextInput
             placeholder="Qtd"
             style={{ paddingLeft: 5, flex: 1, height: 50 }}
+            onChangeText={(val) => (item.doacoesItens.quantidade = val)}
+            keyboardType="numeric"
+            placeholder={item.doacoesItens.quantidade.toString()}
           ></TextInput>
         </View>
         <View style={styles.viewPicker}>
           <Picker
             style={styles.pickerStyle}
-            selectedValue={estadoItem}
-            onValueChange={(itemValue) => setEstadoItem(itemValue)}
+            onValueChange={(val) => (item.doacoesItens.medida = val)}
+            selectedValue={item.doacoesItens.medida}
           >
-            <Picker.Item label="Unidades" value={"Unidades"} />
-            <Picker.Item label="Quilos" value={"Quilos"} />
-            <Picker.Item label="Litros" value={"Litros"} />
+            <Picker.Item label="un" value={"un"} />
+            <Picker.Item label="Kg" value={"Kg"} />
+            <Picker.Item label="L" value={"L"} />
           </Picker>
         </View>
         <Image
@@ -111,6 +140,7 @@ export default function MenuScreen({ navigation }) {
             borderBottomLeftRadius: 10,
           }}
           placeholder="Pesquisar"
+          onChangeText={setSearchText}
         />
         <TouchableOpacity
           style={{ display: "flex", alignItems: "center" }}
@@ -128,7 +158,7 @@ export default function MenuScreen({ navigation }) {
         {!loading && (
           <SafeAreaView style={(styles.container, { marginBottom: 140 })}>
             <FlatList
-              data={listItens[0]}
+              data={list}
               renderItem={renderItem}
               keyExtractor={(item) => item.itemId}
             />

@@ -12,7 +12,7 @@ export default function InputWithIcon({
   onBlur,
 }) {
   return (
-    <View style={styles.inputContainer}>
+    <View>
       <Text style={styles.label}>{title}</Text>
       <View style={styles.input}>
         <MaterialCommunityIcons name={icon} size={22} color="#666" />

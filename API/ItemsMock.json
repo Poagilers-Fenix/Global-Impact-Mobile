@@ -1,0 +1,20 @@
+[
+  {
+    "itemId": "1",
+    "nome": "Arroz",
+    "doacoesItens": null,
+    "foto": "https://static.clubedaanamariabraga.com.br/wp-content/uploads/2020/01/arroz-no-micro-ondas-1024x576.jpg"
+  },
+  {
+    "itemId": "2",
+    "nome": "Feijão",
+    "doacoesItens": null,
+    "foto": "https://static.clubedaanamariabraga.com.br/wp-content/uploads/2020/01/arroz-no-micro-ondas-1024x576.jpg"
+  },
+  {
+    "itemId": "3",
+    "nome": "Atum",
+    "doacoesItens": null,
+    "foto": null
+  }
+]

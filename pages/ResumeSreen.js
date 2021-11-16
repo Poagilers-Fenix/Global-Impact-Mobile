@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
   SafeAreaView,
+  Modal,
 } from "react-native";
 import InputWithIcon from "../components/input/InputWithIcon";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -14,6 +15,7 @@ import { deleteItemById } from "../API/ApiManager";
 import SideBar from "../components/SideBar";
 
 export default function MenuScreen({ navigation, route }) {
+  const [modalVisible, setModalVisible] = useState(false);
   let { itemsSelected } = route.params;
   const deleteItem = async (val) => {
     await deleteItemById(val);
@@ -47,6 +49,11 @@ export default function MenuScreen({ navigation, route }) {
               }
             >
               {item.nome}
+            </Text>
+            <Text
+              style={(styles.cardText, { color: "#666", fontWeight: "bold" })}
+            >
+              {item.doacoesItens.quantidade} {item.doacoesItens.medida}
             </Text>
           </View>
         </View>
@@ -120,13 +127,30 @@ export default function MenuScreen({ navigation, route }) {
             />
             <TouchableOpacity
               style={{ display: "flex", alignItems: "center" }}
-              onPress={() => navigation.navigate("ResumeSreen")}
+              onPress={() => setModalVisible(true)}
             >
               <Text style={styles.btnEnable}>Finalizar</Text>
             </TouchableOpacity>
           </SafeAreaView>
         )}
       </View>
+      {modalVisible && (
+        <Modal animationType="fade" transparent={true} visible={modalVisible}>
+          <View style={styles.containerModal}>
+            <Image
+              style={styles.img}
+              source={require("../assets/ConfirmIcon.png")}
+            />
+            <Text style={styles.titulo}>Solicitação enviada para ONG!</Text>
+            <TouchableOpacity
+              style={{ display: "flex", alignItems: "center" }}
+              onPress={() => navigation.navigate("MenuScreen")}
+            >
+              <Text style={styles.btnVoltar}>Voltar</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+      )}
     </View>
   );
 }
@@ -178,6 +202,25 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     fontSize: 20,
   },
+  btnVoltar: {
+    height: 50,
+    marginTop: 10,
+    paddingHorizontal: 15,
+    paddingBottom: 5,
+    color: "white",
+    borderRadius: 8,
+    color: "#fff",
+    backgroundColor: "#CC5353",
+    textAlignVertical: "center",
+    textAlign: "center",
+    justifyContent: "center",
+    marginBottom: 15,
+    fontSize: 20,
+  },
+  img: {
+    width: 180,
+    height: 180,
+  },
   imagemItem: {
     width: 400,
     height: 300,
@@ -210,5 +253,13 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
 
     borderRadius: 7,
+  },
+  containerModal: {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    backgroundColor: "#fff",
+    alignItems: "center",
   },
 });

@@ -10,6 +10,7 @@ import {
 import InputWithIcon from "../components/input/InputWithIcon";
 import { createCompany, getAddressByCep } from "../API/ApiManager";
 import { ProgressSteps, ProgressStep } from "react-native-progress-steps";
+import { TextInput } from "react-native-gesture-handler";
 export default function CompanyRegistration({ navigation }) {
   const [fantasyName, setFantasyName] = useState("");
   const [email, setEmail] = useState("");
@@ -100,14 +101,17 @@ export default function CompanyRegistration({ navigation }) {
           >
             <View style={{ alignItems: "center" }}>
               <InputWithIcon
+                key="1"
                 title="E-mail para login"
                 onChange={setEmail}
               ></InputWithIcon>
               <InputWithIcon
+                key="2"
                 title="Senha"
                 onChange={setPassword}
               ></InputWithIcon>
               <InputWithIcon
+                key="3"
                 title="Repetir Senha"
                 onChange={setRepeatPassword}
               ></InputWithIcon>
@@ -135,11 +139,17 @@ export default function CompanyRegistration({ navigation }) {
           >
             <View style={{ alignItems: "center" }}>
               <InputWithIcon
+                key="4"
                 title="Nome fantasia"
                 onChange={setFantasyName}
               ></InputWithIcon>
-              <InputWithIcon title="Cnpj" onChange={setCnpj}></InputWithIcon>
               <InputWithIcon
+                title="Cnpj"
+                onChange={setCnpj}
+                key="5"
+              ></InputWithIcon>
+              <InputWithIcon
+                key="6"
                 title="Telefone para contato"
                 onChange={setPhoneNumber}
               ></InputWithIcon>
@@ -175,31 +185,37 @@ export default function CompanyRegistration({ navigation }) {
           >
             <View style={{ alignItems: "center", marginBottom: 20 }}>
               <InputWithIcon
+                key="7"
                 title="Cep"
                 onChange={setCep}
                 onBlur={CepConfig}
               ></InputWithIcon>
               <InputWithIcon
+                key="8"
                 title="Cidade"
                 onChange={setCidade}
                 value={cidade}
               ></InputWithIcon>
               <InputWithIcon
+                key="9"
                 title="Uf"
                 onChange={setUf}
                 value={uf}
               ></InputWithIcon>
               <InputWithIcon
+                key="10"
                 title="Bairro"
                 onChange={setBairro}
                 value={bairro}
               ></InputWithIcon>
               <InputWithIcon
+                key="11"
                 title="Logradouro"
                 onChange={setLogradouro}
                 value={logradouro}
               ></InputWithIcon>
               <InputWithIcon
+                key="12"
                 title="Número"
                 onChange={setNumber}
               ></InputWithIcon>

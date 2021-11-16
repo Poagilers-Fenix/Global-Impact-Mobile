@@ -1,13 +1,12 @@
+const API_LINK = "https://wefeed.azurewebsites.net/api/";
+
 export const createCompany = async (value) => {
   try {
-    let response = await fetch(
-      "https://wefeed.azurewebsites.net/api/estabelecimentos",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(value),
-      }
-    );
+    let response = await fetch(`${API_LINK}/estabelecimentos`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(value),
+    });
     let json = await response.json();
     return json;
   } catch (error) {
@@ -16,12 +15,9 @@ export const createCompany = async (value) => {
 };
 export const getCompanies = async () => {
   try {
-    let response = await fetch(
-      "https://wefeed.azurewebsites.net/api/estabelecimentos",
-      {
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    let response = await fetch(`${API_LINK}/estabelecimentos`, {
+      headers: { "Content-Type": "application/json" },
+    });
     let json = await response.json();
     return json;
   } catch (error) {
@@ -31,7 +27,7 @@ export const getCompanies = async () => {
 
 export const createItems = async (value) => {
   try {
-    let response = await fetch("https://wefeed.azurewebsites.net/api/itens", {
+    let response = await fetch(`${API_LINK}/itens`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(value),
@@ -45,7 +41,7 @@ export const createItems = async (value) => {
 
 export const getItems = async () => {
   try {
-    let response = await fetch("https://wefeed.azurewebsites.net/api/itens", {
+    let response = await fetch(`${API_LINK}/itens`, {
       headers: { "Content-Type": "application/json" },
     });
     let json = await response.json();
@@ -57,13 +53,10 @@ export const getItems = async () => {
 
 export const deleteItemById = async (value) => {
   try {
-    let response = await fetch(
-      `https://wefeed.azurewebsites.net/api/itens/${value}`,
-      {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    let response = await fetch(`${API_LINK}/itens/${value}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
     let json = await response.json();
     return json;
   } catch (error) {
@@ -75,7 +68,7 @@ export const updateItem = async (value) => {
   try {
     console.log(value);
     console.log(value.itemId);
-    await fetch(`https://wefeed.azurewebsites.net/api/itens/${value.itemId}`, {
+    await fetch(`${API_LINK}/itens/${value.itemId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(value),
