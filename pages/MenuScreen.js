@@ -14,9 +14,10 @@ import {
 } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import RadioForm from "react-native-simple-radio-button";
+
 import { getItems } from "../API/ApiManager";
 const getItemsMock = require("../API/ItemsMock.json");
-import { Picker } from "@react-native-picker/picker";
 import SideBar from "../components/SideBar";
 export default function MenuScreen({ navigation }) {
   const [isCheckList, setIsCheckList] = useState([]);
@@ -24,6 +25,12 @@ export default function MenuScreen({ navigation }) {
   const [searchText, setSearchText] = useState([]);
   const [loading, isLoading] = useState(false);
   const [list, setList] = useState(listItens[0]);
+
+  var radio_props = [
+    { label: "un", value: "un" },
+    { label: "kg", value: "Kg" },
+    { label: "L", value: "L" },
+  ];
 
   // Ativar ou desativar mock
   let MOCK = true;
@@ -98,15 +105,15 @@ export default function MenuScreen({ navigation }) {
           ></TextInput>
         </View>
         <View style={styles.viewPicker}>
-          <Picker
-            style={styles.pickerStyle}
-            onValueChange={(val) => (item.doacoesItens.medida = val)}
-            selectedValue={item.doacoesItens.medida}
-          >
-            <Picker.Item label="un" value={"un"} />
-            <Picker.Item label="Kg" value={"Kg"} />
-            <Picker.Item label="L" value={"L"} />
-          </Picker>
+          <View>
+            <RadioForm
+              radio_props={radio_props}
+              initial={0}
+              onPress={(val) => (item.doacoesItens.medida = val)}
+              buttonSize={10}
+              buttonColor={"#CC5353"}
+            />
+          </View>
         </View>
         <Image
           style={styles.imgList}
@@ -290,11 +297,9 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
+    width: 70,
     marginHorizontal: 20,
-    marginVertical: 30,
-    borderWidth: 1,
-    borderColor: "#aaa",
-    borderRadius: 7,
+    marginVertical: 5,
   },
   input: {
     borderColor: "#aaa",
