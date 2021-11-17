@@ -25,6 +25,7 @@ export default function MenuScreen({ navigation }) {
   const [searchText, setSearchText] = useState([]);
   const [loading, isLoading] = useState(false);
   const [list, setList] = useState(listItens[0]);
+  const [load, setLoad] = useState(true);
 
   var radio_props = [
     { label: "un", value: "un" },
@@ -37,6 +38,10 @@ export default function MenuScreen({ navigation }) {
 
   useEffect(() => {
     async function fetchData() {
+      navigation.addListener("focus", async () => {
+        setLoad(!load);
+        setListItens([]);
+      });
       isLoading(true);
       const res = MOCK == true ? getItemsMock : await getItems();
       listItens.push(res);
@@ -58,7 +63,7 @@ export default function MenuScreen({ navigation }) {
       isLoading(false);
     }
     fetchData();
-  }, [searchText]);
+  }, [load, searchText]);
 
   const updateListItens = (item) => {
     item.doacoesItens = { quantidade: 1, medida: "un" };

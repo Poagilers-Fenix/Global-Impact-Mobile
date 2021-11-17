@@ -26,7 +26,7 @@ export default function CreateItem({ navigation }) {
       foto: image == "" ? undefined : image,
     });
     isLoading(false);
-    navigation.navigate("MenuScreen");
+    navigation.goBack();
   };
 
   return (
