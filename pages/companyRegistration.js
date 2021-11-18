@@ -11,6 +11,7 @@ import InputWithIcon from "../components/input/InputWithIcon";
 import { createCompany, getAddressByCep } from "../API/ApiManager";
 import { ProgressSteps, ProgressStep } from "react-native-progress-steps";
 import { TextInput } from "react-native-gesture-handler";
+import Global from "../Global/Global";
 export default function CompanyRegistration({ navigation }) {
   const [fantasyName, setFantasyName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,7 +28,7 @@ export default function CompanyRegistration({ navigation }) {
   const [error, setError] = useState(false);
 
   const pressSave = async () => {
-    await createCompany({
+    const companyObj = {
       nome: fantasyName,
       Cnpj: cnpj,
       Endereco: {
@@ -41,7 +42,9 @@ export default function CompanyRegistration({ navigation }) {
       Telefone: phoneNumber,
       Email: email,
       senha: password,
-    });
+    };
+    await createCompany(companyObj);
+    Global.estabInSession = companyObj;
     navigation.navigate("MenuScreen");
   };
   const CepConfig = async () => {
@@ -81,12 +84,12 @@ export default function CompanyRegistration({ navigation }) {
             nextBtnText="Próximo"
             errors={error}
             onNext={() => {
+              setError(true);
               if (password != repeatPassword) {
-                setError(true);
                 Alert.alert("Aviso", "Senhas Não Coincidem");
               } else if (
-                email == "" &&
-                password == "" &&
+                email == "" ||
+                password == "" ||
                 repeatPassword == ""
               ) {
                 setError(true);
@@ -125,12 +128,23 @@ export default function CompanyRegistration({ navigation }) {
             nextBtnStyle={styles.nextBtn}
             previousBtnStyle={styles.previousBtn}
             previousBtnTextStyle={styles.btnVoltar}
+            errors={error}
             onNext={() => {
-              if (fantasyName == "" && cnpj == "" && phoneNumber == "") {
-                setError(true);
+              setError(true);
+              if (fantasyName == "" || cnpj == "" || phoneNumber == "") {
                 Alert.alert(
                   "Aviso",
                   "Algum campo não foi preenchido corretamente"
+                );
+              } else if (cnpj.length < 14) {
+                Alert.alert(
+                  "Aviso",
+                  "CNPJ não foi preenchido com 14 caracteres"
+                );
+              } else if (phoneNumber.length < 11) {
+                Alert.alert(
+                  "Aviso",
+                  "O telefone está incompleto. Lembre-se de colocar o DDD."
                 );
               } else {
                 setError(false);
@@ -163,25 +177,27 @@ export default function CompanyRegistration({ navigation }) {
             nextBtnStyle={styles.nextBtn}
             previousBtnStyle={styles.previousBtn}
             previousBtnTextStyle={styles.btnVoltar}
-            onSubmit={pressSave}
-            onNext={() => {
+            onSubmit={() => {
+              setError(true);
               if (
-                cep == "" &&
-                cidade == "" &&
-                uf == "" &&
-                bairro == "" &&
-                logradouro == "" &&
+                cep == "" ||
+                cidade == "" ||
+                uf == "" ||
+                bairro == "" ||
+                logradouro == "" ||
                 number == ""
               ) {
-                setError(true);
                 Alert.alert(
                   "Aviso",
                   "Algum campo não foi preenchido corretamente"
                 );
               } else {
                 setError(false);
+                pressSave();
               }
             }}
+            errors={error}
+            onNext={() => {}}
           >
             <View style={{ alignItems: "center", marginBottom: 20 }}>
               <InputWithIcon

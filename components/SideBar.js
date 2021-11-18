@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import Global from "../Global/Global";
 
 export default function SideBar({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -31,7 +32,7 @@ export default function SideBar({ navigation }) {
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
-              marginTop: 20,
+              marginTop: 10,
               backgroundColor: "#fff",
             }}
           >
@@ -40,10 +41,11 @@ export default function SideBar({ navigation }) {
               <Text
                 style={{ fontSize: 20, color: "#CC5353", fontWeight: "bold" }}
               >
-                Nome da empresa
+                {Global.estabInSession.nome}
               </Text>
               <Text style={{ fontWeight: "bold", color: "#666" }}>
-                nome@gmail.com
+                {console.log(Global.estabInSession)}
+                {Global.estabInSession.email}
               </Text>
             </View>
           </View>

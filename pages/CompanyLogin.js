@@ -12,6 +12,7 @@ import {
 import InputWithIcon from "../components/input/InputWithIcon";
 import { getCompanies } from "../API/ApiManager";
 import { ScrollView } from "react-native-gesture-handler";
+import Global from "../Global/Global";
 
 export default function CompanyLogin({ navigation }) {
   const [email, setEmail] = useState("");
@@ -29,6 +30,7 @@ export default function CompanyLogin({ navigation }) {
     listCompanies.push(res);
     const isValid = listCompanies[0].filter((val) => {
       if (val.email == email && val.senha == password) {
+        Global.estabInSession = val;
         return "Entrou";
       }
     });

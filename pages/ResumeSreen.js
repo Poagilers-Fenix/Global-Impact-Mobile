@@ -68,7 +68,7 @@ export default function MenuScreen({ navigation, route }) {
             onPress={() =>
               navigation.navigate({
                 name: "EditItem",
-                params: { item },
+                params: { item, itemsSelected },
               })
             }
           >

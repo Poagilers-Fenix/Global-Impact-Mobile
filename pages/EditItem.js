@@ -16,6 +16,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 export default function EditItem({ navigation, route }) {
   const { item } = route.params;
+  const { itemsSelected } = route.params;
   const [name, setName] = useState(false);
   const [image, setImage] = useState("");
   const [loading, isLoading] = useState(false);
@@ -27,8 +28,18 @@ export default function EditItem({ navigation, route }) {
       nome: name,
       foto: image == "" ? item.foto : image,
     });
+    itemsSelected.map((val) => {
+      if (val.itemId == item.itemId) {
+        val.itemId = item.itemId;
+        val.nome = name;
+        val.image == "" ? item.foto : image;
+      }
+    });
     isLoading(false);
-    navigation.navigate("MenuScreen");
+    navigation.navigate({
+      name: "ResumeSreen",
+      params: { itemsSelected },
+    });
   };
 
   return (

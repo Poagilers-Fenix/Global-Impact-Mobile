@@ -41,6 +41,7 @@ export default function MenuScreen({ navigation }) {
       navigation.addListener("focus", async () => {
         setLoad(!load);
         setListItens([]);
+        setIsCheckList([]);
       });
       isLoading(true);
       const res = MOCK == true ? getItemsMock : await getItems();

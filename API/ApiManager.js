@@ -66,8 +66,6 @@ export const deleteItemById = async (value) => {
 
 export const updateItem = async (value) => {
   try {
-    console.log(value);
-    console.log(value.itemId);
     await fetch(`${API_LINK}/itens/${value.itemId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
