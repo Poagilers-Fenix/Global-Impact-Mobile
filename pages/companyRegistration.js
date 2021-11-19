@@ -40,7 +40,7 @@ export default function CompanyRegistration({ navigation }) {
         Numero: number,
       },
       Telefone: phoneNumber,
-      Email: email,
+      email: email,
       senha: password,
     };
     await createCompany(companyObj);

@@ -44,7 +44,6 @@ export default function SideBar({ navigation }) {
                 {Global.estabInSession.nome}
               </Text>
               <Text style={{ fontWeight: "bold", color: "#666" }}>
-                {console.log(Global.estabInSession)}
                 {Global.estabInSession.email}
               </Text>
             </View>

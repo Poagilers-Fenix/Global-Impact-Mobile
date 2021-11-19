@@ -28,11 +28,10 @@ export default function InitialSreen({ navigation }) {
         <TouchableOpacity
           style={{ display: "flex", alignItems: "center", marginTop: 30 }}
           onPress={() =>
-            // Alert.alert(
-            //   "Aviso",
-            //   "Este recurso ainda não está disponível!! Vem novidade por aí...."
-            // )
-            navigation.navigate("MenuScreen")
+            Alert.alert(
+              "Aviso",
+              "Este recurso ainda não está disponível!! Vem novidade por aí...."
+            )
           }
         >
           <Text style={styles.btnDisable}>Sou pessoa física</Text>
